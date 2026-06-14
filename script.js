@@ -17,6 +17,12 @@ const premios = [
 ];
 
 let girando = false;
+let premioFinal = "";
+
+function irARuleta(){
+    document.getElementById("infoPage").style.display="none";
+    document.getElementById("ruletaPage").style.display="block";
+}
 
 function dibujar(){
     const centro = 150;
@@ -50,9 +56,11 @@ function girarRuleta(){
     if(girando) return;
     girando = true;
 
-    let duracion = 15000;
+    premioFinal = premios[Math.floor(Math.random()*premios.length)];
+
+    let duracion = 5000; // 👈 5 segundos
     let inicio = null;
-    let vueltas = 10 + Math.random()*5;
+    let vueltas = 8;
 
     function animar(t){
         if(!inicio) inicio = t;
@@ -65,14 +73,24 @@ function girarRuleta(){
         if(tiempo < duracion){
             requestAnimationFrame(animar);
         } else {
-            girando = false;
-
-            let premio = premios[Math.floor(Math.random()*premios.length)];
-
-            document.getElementById("resultado").innerHTML =
-            "🎉 Ganaste: <b>" + premio + "</b>";
+            mostrarPremio();
         }
     }
 
     requestAnimationFrame(animar);
+}
+
+function mostrarPremio(){
+
+    document.getElementById("ruletaPage").style.display="none";
+    document.getElementById("resultadoPage").style.display="block";
+
+    document.getElementById("premioFinal").innerHTML =
+    "🎉 Ganaste: " + premioFinal + " 💖";
+
+    lanzarConfeti();
+}
+
+function lanzarConfeti(){
+    document.body.style.background = "#fff0f7";
 }
