@@ -1,4 +1,6 @@
 function girarRuleta() {
+    alert("Funciona 🎡💖");
+}
 
 let nombre = document.getElementById("nombre").value;
 let instagram = document.getElementById("instagram").value;
