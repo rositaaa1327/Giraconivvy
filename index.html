@@ -3,43 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>GiraConIvvy</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<!-- PANTALLA 1 -->
+<div id="pantalla1" class="container">
+<h1>🎡 GiraConIvvy</h1>
 
-<!-- FASE 1 -->
-<div id="infoPage">
-    <h1>🎡 GiraConIvvy</h1>
+<input id="nombre" placeholder="Tu nombre">
+<input id="instagram" placeholder="Tu Instagram">
 
-    <p>
-    Gira la ruleta y gana premios exclusivos 💖
-    </p>
+<br><br>
 
-    <input id="nombre" placeholder="Tu nombre">
-    <input id="instagram" placeholder="Tu Instagram">
-
-    <button onclick="irARuleta()">Continuar</button>
+<button onclick="entrar()">Continuar</button>
 </div>
 
-<!-- FASE 2 -->
-<div id="ruletaPage" style="display:none;">
-    
-    <canvas id="ruletaCanvas" width="300" height="300"></canvas>
+<!-- PANTALLA 2 -->
+<div id="pantalla2" class="container" style="display:none;">
+<h1>🎡 Tu Ruleta</h1>
 
-    <button onclick="girarRuleta()">GIRAR</button>
-</div>
+<canvas id="ruletaCanvas" width="300" height="300"></canvas>
 
-<!-- FASE 3 -->
-<div id="resultadoPage" style="display:none;">
-    <h1 id="premioFinal"></h1>
-</div>
+<button onclick="girarRuleta()">GIRAR</button>
 
+<div id="resultado"></div>
 </div>
 
 <script src="script.js"></script>
