@@ -13,18 +13,32 @@
 
 <div class="container">
 
-<h1>🎡 GiraConIvvy</h1>
+<!-- FASE 1 -->
+<div id="infoPage">
+    <h1>🎡 GiraConIvvy</h1>
 
-<p>Ingresa tus datos y gira la ruleta</p>
+    <p>
+    Gira la ruleta y gana premios exclusivos 💖
+    </p>
 
-<input id="nombre" placeholder="Tu nombre">
-<input id="instagram" placeholder="Tu Instagram">
+    <input id="nombre" placeholder="Tu nombre">
+    <input id="instagram" placeholder="Tu Instagram">
 
-<canvas id="ruletaCanvas" width="300" height="300"></canvas>
+    <button onclick="irARuleta()">Continuar</button>
+</div>
 
-<button onclick="girarRuleta()">GIRAR</button>
+<!-- FASE 2 -->
+<div id="ruletaPage" style="display:none;">
+    
+    <canvas id="ruletaCanvas" width="300" height="300"></canvas>
 
-<div id="resultado"></div>
+    <button onclick="girarRuleta()">GIRAR</button>
+</div>
+
+<!-- FASE 3 -->
+<div id="resultadoPage" style="display:none;">
+    <h1 id="premioFinal"></h1>
+</div>
 
 </div>
 
