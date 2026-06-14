@@ -1,97 +1,76 @@
-<script src="script.js"></script>
-const canvas = document.getElementById("ruletaCanvas");
-const ctx = canvas.getContext("2d");
-
-const premios = [
+let premios = [
 "5% OFF",
 "10% OFF",
 "Regalo",
 "15% OFF",
-"50% OFF 7 días",
 "50% OFF",
 "Pulsera gratis",
-"5% OFF",
+"Regalo sorpresa",
 "10% OFF",
-"Regalo",
+"5% OFF",
 "15% OFF",
-"Pulsera gratis"
+"Pulsera gratis",
+"50% OFF"
 ];
 
-let girando = false;
-let premioFinal = "";
+let canvas = document.getElementById("ruletaCanvas");
+let ctx = canvas.getContext("2d");
 
-function irARuleta(){
-    document.getElementById("infoPage").style.display="none";
-    document.getElementById("ruletaPage").style.display="block";
+let girando = false;
+
+function entrar(){
+    document.getElementById("pantalla1").style.display="none";
+    document.getElementById("pantalla2").style.display="block";
+    dibujar();
 }
 
 function dibujar(){
-    const centro = 150;
-    const radio = 150;
-    const paso = (2*Math.PI)/premios.length;
+    let centro = 150;
+    let angulo = (2*Math.PI)/premios.length;
 
     for(let i=0;i<premios.length;i++){
-        let start = i * paso;
-
         ctx.beginPath();
         ctx.moveTo(centro,centro);
-        ctx.arc(centro,centro,radio,start,start+paso);
-
-        ctx.fillStyle = i%2===0 ? "#ff4da6" : "#ff99cc";
+        ctx.fillStyle = i%2==0 ? "#ff4da6" : "#ff99cc";
+        ctx.arc(centro,centro,150,i*angulo,(i+1)*angulo);
         ctx.fill();
 
         ctx.save();
         ctx.translate(centro,centro);
-        ctx.rotate(start + paso/2);
+        ctx.rotate(i*angulo);
         ctx.fillStyle="white";
-        ctx.font="12px Arial";
-        ctx.fillText(premios[i],100,5);
+        ctx.fillText(premios[i],80,10);
         ctx.restore();
     }
 }
-
-dibujar();
 
 function girarRuleta(){
 
     if(girando) return;
     girando = true;
 
-    premioFinal = premios[Math.floor(Math.random()*premios.length)];
-
-    let duracion = 5000; // 👈 5 segundos
+    let duracion = 15000;
     let inicio = null;
-    let vueltas = 8;
 
     function animar(t){
-        if(!inicio) inicio = t;
-        let tiempo = t - inicio;
+        if(!inicio) inicio=t;
 
-        let rotacion = (tiempo/duracion) * vueltas * 2*Math.PI;
+        let tiempo = t-inicio;
+        let rotacion = (tiempo/duracion)*20;
 
         canvas.style.transform = `rotate(${rotacion}rad)`;
 
-        if(tiempo < duracion){
+        if(tiempo<duracion){
             requestAnimationFrame(animar);
         } else {
-            mostrarPremio();
+            girando=false;
+
+            let premio = premios[Math.floor(Math.random()*premios.length)];
+
+            document.getElementById("resultado").innerHTML =
+            "🎉 Ganaste: <b>"+premio+"</b>";
         }
     }
 
     requestAnimationFrame(animar);
-}
-
-function mostrarPremio(){
-
-    document.getElementById("ruletaPage").style.display="none";
-    document.getElementById("resultadoPage").style.display="block";
-
-    document.getElementById("premioFinal").innerHTML =
-    "🎉 Ganaste: " + premioFinal + " 💖";
-
-    lanzarConfeti();
-}
-
-function lanzarConfeti(){
-    document.body.style.background = "#fff0f7";
 }
