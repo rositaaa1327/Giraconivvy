@@ -7,12 +7,11 @@ body{
 }
 
 .container{
-    background:white;
     max-width:500px;
     margin:auto;
+    background:white;
     padding:20px;
     border-radius:20px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
 }
 
 input{
@@ -20,7 +19,6 @@ input{
     padding:10px;
     margin:8px;
     border-radius:10px;
-    border:1px solid #ccc;
 }
 
 button{
@@ -30,10 +28,10 @@ button{
     border:none;
     border-radius:10px;
     cursor:pointer;
+    margin-top:10px;
 }
 
-#resultado{
-    margin-top:15px;
-    font-weight:bold;
+#premioFinal{
+    font-size:28px;
     color:#ff4da6;
 }
