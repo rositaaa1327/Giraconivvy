@@ -1,39 +1,78 @@
-function girarRuleta() {
-    alert("Funciona 🎡💖");
-}
+const canvas = document.getElementById("ruletaCanvas");
+const ctx = canvas.getContext("2d");
 
-let nombre = document.getElementById("nombre").value;
-let instagram = document.getElementById("instagram").value;
-
-if(nombre === "" || instagram === ""){
-    alert("Por favor completa todos los campos 💖");
-    return;
-}
-
-let premios = [
-    "💖 5% de descuento",
-    "✨ 10% de descuento",
-    "🎁 Regalo sorpresa",
-    "🛍️ 15% de descuento",
-    "🌟 Cupón especial (50% por 7 días)",
-    "🔥 50% de descuento",
-    "💎 Pulsera personalizada gratis"
+const premios = [
+"5% OFF",
+"10% OFF",
+"Regalo",
+"15% OFF",
+"50% OFF 7 días",
+"50% OFF",
+"Pulsera gratis",
+"5% OFF",
+"10% OFF",
+"Regalo",
+"15% OFF",
+"Pulsera gratis"
 ];
 
-// Elegir premio aleatorio
-let premio = premios[Math.floor(Math.random() * premios.length)];
+let girando = false;
 
-// Simular "giro"
-document.getElementById("resultado").innerHTML = "Girando... 🎡✨";
+function dibujar(){
+    const centro = 150;
+    const radio = 150;
+    const paso = (2*Math.PI)/premios.length;
 
-setTimeout(() => {
-    let codigo = "IVVY-" + Math.random().toString(36).substring(2,8).toUpperCase();
+    for(let i=0;i<premios.length;i++){
+        let start = i * paso;
 
-    document.getElementById("resultado").innerHTML = 
-    "🎉 ¡Felicidades!<br><br>" +
-    "Ganaste: <br><b>" + premio + "</b><br><br>" +
-    "Código: <b>" + codigo + "</b><br><br>" +
-    "📸 Toma captura y envíala por Instagram para reclamar tu premio.";
-}, 3000);
+        ctx.beginPath();
+        ctx.moveTo(centro,centro);
+        ctx.arc(centro,centro,radio,start,start+paso);
 
+        ctx.fillStyle = i%2===0 ? "#ff4da6" : "#ff99cc";
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(centro,centro);
+        ctx.rotate(start + paso/2);
+        ctx.fillStyle="white";
+        ctx.font="12px Arial";
+        ctx.fillText(premios[i],100,5);
+        ctx.restore();
+    }
+}
+
+dibujar();
+
+function girarRuleta(){
+
+    if(girando) return;
+    girando = true;
+
+    let duracion = 15000;
+    let inicio = null;
+    let vueltas = 10 + Math.random()*5;
+
+    function animar(t){
+        if(!inicio) inicio = t;
+        let tiempo = t - inicio;
+
+        let rotacion = (tiempo/duracion) * vueltas * 2*Math.PI;
+
+        canvas.style.transform = `rotate(${rotacion}rad)`;
+
+        if(tiempo < duracion){
+            requestAnimationFrame(animar);
+        } else {
+            girando = false;
+
+            let premio = premios[Math.floor(Math.random()*premios.length)];
+
+            document.getElementById("resultado").innerHTML =
+            "🎉 Ganaste: <b>" + premio + "</b>";
+        }
+    }
+
+    requestAnimationFrame(animar);
 }
