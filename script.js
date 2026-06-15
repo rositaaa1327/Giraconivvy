@@ -69,38 +69,37 @@ function girarRuleta() {
     if (girando) return;
     girando = true;
 
-    const duracion = 5000; // 5 segundos
-    const vueltas = 8 + Math.random() * 4;
+  const duracion = 5000;
+const vueltas = 10 + Math.random() * 5;
 
-    const inicio = performance.now();
+const inicio = performance.now();
 
-    const premioIndex = Math.floor(Math.random() * premios.length);
-    const anguloFinal = (premioIndex * anguloPorSeccion);
+const premioIndex = Math.floor(Math.random() * premios.length);
+const anguloFinal = (premioIndex * anguloPorSeccion);
 
-    function animar(tiempo) {
+function animar(tiempo){
 
-        let progreso = (tiempo - inicio) / duracion;
+    let progreso = (tiempo - inicio) / duracion;
+    if(progreso > 1) progreso = 1;
 
-        if (progreso > 1) progreso = 1;
+    // 🔥 MÁS DINÁMICA AL INICIO + FRENADO REAL
+    let easing = 1 - Math.pow(1 - progreso, 4);
 
-        // easing (desaceleración real casino)
-        let easing = 1 - Math.pow(1 - progreso, 3);
+    anguloActual = (vueltas * 2 * Math.PI * easing) + anguloFinal;
 
-        anguloActual = (vueltas * 2 * Math.PI * easing) + anguloFinal;
+    canvas.style.transform = `rotate(${anguloActual}rad)`;
 
-        canvas.style.transform = `rotate(${anguloActual}rad)`;
+    if(progreso < 1){
+        requestAnimationFrame(animar);
+    } else {
+        girando = false;
 
-        if (progreso < 1) {
-            requestAnimationFrame(animar);
-        } else {
-            girando = false;
+        let premio = premios[premioIndex];
 
-            let premio = premios[premioIndex];
-
-            document.getElementById("resultado").innerHTML =
-                "🎉 <b>Ganaste:</b> " + premio + "<br>📸 Envía captura por Instagram 💖";
-        }
+        document.getElementById("resultado").innerHTML =
+        "🎉 <b>¡Te tocó!</b><br><br>" +
+        "👉 " + premio;
     }
-
-    requestAnimationFrame(animar);
 }
+
+requestAnimationFrame(animar);
