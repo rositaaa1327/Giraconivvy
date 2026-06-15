@@ -23,6 +23,13 @@ input{
     margin:8px;
     border-radius:10px;
 }
+.flecha{
+    font-size:40px;
+    color:#ff4da6;
+    margin-top:-10px;
+    position:relative;
+    z-index:10;
+}
 
 button{
     background:#ff4da6;
